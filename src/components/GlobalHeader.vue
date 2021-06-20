@@ -3,10 +3,10 @@
     <a href="#" class="navbar-brand">专栏</a>
     <ul class="list-inline mb-0" v-if="!user.isLogin">
       <li class="list-inline-item">
-        <a href="#" class="btn btn-outline-light my-2">登录</a>
+        <router-link to="login" class="btn btn-outline-light my-2">登录</router-link>
       </li>
       <li class="list-inline-item">
-        <a href="#" class="btn btn-outline-light my-2">注册</a>
+        <router-link to="login" class="btn btn-outline-light my-2">注册</router-link>
       </li>
     </ul>
     <ul class="list-inline mb-0" v-else>

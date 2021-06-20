@@ -1,55 +1,37 @@
 <template>
   <div class="container">
-    <GlobalHeader :user="user" />
-    <validation-form @form-submit="submit">
-      <validation-form-item
-        label="邮箱"
-        v-model="emailRef"
-        :rules="[{ type: 'required', message: '邮箱不能为空' }, { type: 'email', message: '请输入合法的邮箱' }]"
-        type="text"
-        placeholder="请输入邮箱地址"
-      />
-      <validation-form-item
-        label="密码"
-        v-model="passwordRef"
-        :rules="[{ type: 'required', message: '密码不能为空' }]"
-        type="password"
-        placeholder="请输入密码"
-      />
-      <template #submit>
-        <button type="submit" class="btn btn-danger">提交</button>
-      </template>
-    </validation-form>
+    <GlobalHeader :user="currentUser"/>
+    <router-view />
+    <footer style="height: 50px" class="text-center">
+      <small>
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item">© 2020 者也专栏</li>
+          <li class="list-inline-item">课程</li>
+          <li class="list-inline-item">文档</li>
+          <li class="list-inline-item">联系</li>
+          <li class="list-inline-item">更多</li>
+        </ul>
+      </small>
+    </footer>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
 import GlobalHeader from '@/components/GlobalHeader.vue'
-import { User } from '@/types/User'
-import ValidationFormItem from '@/components/ValidationFormItem.vue'
-import ValidationForm from '@/components/ValidationForm.vue'
-const user: User = {
-  isLogin: true,
-  id: 1,
-  name: 'Jack'
-}
+import { RootState } from '@/types/StoreType'
+
 export default defineComponent({
   name: 'App',
   components: {
-    ValidationForm,
-    ValidationFormItem,
     GlobalHeader
   },
   setup () {
-    const emailRef = ref('')
-    const passwordRef = ref('')
-    const submit = (result: boolean) => console.log('submit', result)
+    const store = useStore<RootState>()
+    const currentUser = computed(() => store.state.user)
     return {
-      user,
-      emailRef,
-      passwordRef,
-      submit
+      currentUser
     }
   }
 })
